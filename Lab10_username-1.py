@@ -6,3 +6,5 @@ Create text analyzer that counts how many words are in a specified file,
 """
 from pathlib import Path
 import string
+
+class WordAnalyzer:
