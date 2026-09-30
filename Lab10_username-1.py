@@ -51,3 +51,41 @@ class WordAnalyzer:
         for word in words:
             print(f"{word:<{width}} :: {self.__frequencies[word]}")
 
+def main():
+    """Display the file menu and run the analyzer on the user's choice."""
+    text_folder = Path(__file__).parent / "text_files"
+    files = {
+        "1": text_folder / "monte_cristo.txt",
+        "2": text_folder / "princess_mars.txt",
+        "3": text_folder / "tarzan.txt",
+        "4": text_folder / "treasure_island.txt",
+    }
+    exit_choice = str(len(files) + 1)
+
+    stop_words = ["the", "a", "an", "and", "or", "of", "to", "in", "is", "it"]
+
+    while True:
+        print("\n--- Word Analyzer ---")
+        print("Please select a file to analyze:")
+        for key, path in files.items():
+            print(f"{key}. {path.stem.replace('_', ' ').title()}")
+        print(f"{exit_choice}. Exit")
+
+        choice = input(f"\nEnter your choice (1-{exit_choice}): ").strip()
+
+        if choice == exit_choice:
+            print("\nGoodbye!")
+            break
+
+        if choice in files:
+            analyzer = WordAnalyzer(files[choice], stop_words)
+            if analyzer.process_file():
+                analyzer.print_report()
+        else:
+            print(f"\nInvalid choice. Please select from 1-{exit_choice}.")
+
+        input("\nPress Enter to return to the menu... ")
+
+
+if __name__ == "__main__":
+    main()
